@@ -3,46 +3,61 @@ package com.example.project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
-    Integer Berat, Panjang, Lebar, Tinggi;
-    Float Volumetrik;
+    EditText berat, panjang, lebar, tinggi;
+    Button upload;
+    TextView hasil,hasilv, hasilb;
+    Float volumetrik;
+
+    Integer b,p,l,t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Scanner input = new Scanner(System.in);
-        Scanner input1 = new Scanner(System.in);
-        Scanner input2 = new Scanner(System.in);
-        Scanner input3 = new Scanner(System.in);
+        berat = findViewById(R.id.ed);
+        panjang = findViewById(R.id.ed2);
+        lebar = findViewById(R.id.ed3);
+        tinggi = findViewById(R.id.ed4);
+        upload = findViewById(R.id.button);
+        hasil = findViewById(R.id.textView);
+        hasilv = findViewById(R.id.textView1);
+        hasilb = findViewById(R.id.textView2);
 
-        System.out.println("Masukkan Berat Barang : ");
-        System.out.println("Masukkan Panjang Barang : ");
-        System.out.println("Masukkan Lebar Barang : ");
-        System.out.println("Masukkan Tinggi Barang : ");
+//        System.out.println("Masukkan Berat Barang : ");
+//        System.out.println("Masukkan Panjang Barang : ");
+//        System.out.println("Masukkan Lebar Barang : ");
+//        System.out.println("Masukkan Tinggi Barang : ");
 
-        Berat = Integer.valueOf(input.nextLine());
-        Panjang = Integer.valueOf(input1.nextLine());
-        Lebar = Integer.valueOf(input2.nextLine());
-        Tinggi = Integer.valueOf(input3.nextLine());
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b = Integer.valueOf(String.valueOf(berat.getText()));
+                p = Integer.valueOf(String.valueOf(panjang.getText()));
+                l = Integer.valueOf(String.valueOf(lebar.getText()));
+                t = Integer.valueOf(String.valueOf(tinggi.getText()));
 
-        System.out.println("Berat " + Berat.toString() + "kg \n" + "Panjang : " + Panjang.toString() + "Cm \n" + "Lebar : " + Lebar.toString() + "Cm \n" + "Tinggi : " + Tinggi.toString());
-        Volumetrik = Float.valueOf((Panjang * Lebar * Tinggi) / 4000);
+                hasil.setText("Berat " + b.toString() + "kg \n" + "Panjang : " + p.toString() + "Cm \n" + "Lebar : " + l.toString() + "Cm \n" + "Tinggi : " + t.toString() + "Cm");
+                volumetrik = Float.valueOf((p * l * t) / 4000);
 
-        System.out.println("Berat Volumetrik: " + Volumetrik.toString());
+                hasilv.setText("Berat Volumetrik: " + volumetrik.toString() +"\n Berat Aktual (" + b.toString() + ") : Berat Volumetrik (" + volumetrik.toString() + ") \n");
 
-        System.out.println("Berat Aktual (" + Berat + ") : Berat Volumetrik (" + Volumetrik + ") \n");
-
-        if (Berat > Volumetrik) {
-            System.out.println("Yang dipilih Berat Aktual = " + Berat);
-        } else if (Berat < Volumetrik) {
-            System.out.println("Yang dipilih Berat Volumetrik: " + Volumetrik);
-        } else {
-            System.out.println("Keduanya memiliki berat yang sama");
-        }
+                if (b > volumetrik) {
+                    hasilb.setText("Yang dipilih Berat Aktual = " + b.toString());
+                } else if (b < volumetrik) {
+                    hasilb.setText("Yang dipilih Berat Volumetrik: " + volumetrik.toString());
+                } else {
+                    hasilb.setText("Keduanya memiliki berat yang sama");
+                }
+            }
+        });
 
     }
 }
